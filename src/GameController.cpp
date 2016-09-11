@@ -18,7 +18,7 @@ void GameController::InitializeBuilding()
 
 ObstacleLocation *GameController::LoadObstaclePosition( )
 {
-     return new ObstacleLocation[5]
+   return new ObstacleLocation[5]
                  {{2,2,GameConfig::ENEMY_COMMANDER},
                   {0,8,GameConfig::TANK},
                   {5,3,GameConfig::MISSILE},
@@ -77,8 +77,7 @@ bool GameController::Simulate()
       out = Output::getInstance();
       out->jsonMsg.append("\"moves\":[\n\n");
 
-
-      for(iter = moves.begin(); iter!= moves.end()&&movCount<=GameConfig::MovesLength; ++iter,movCount++)
+      for(iter = moves.begin(); iter!= moves.end()&&movCount<=GameConfig::MovesLength; ++iter)
       {
             currentMove = *iter;
             if(!((currentMove.GetRow()==dest->GetFloor())&&currentMove.GetColumn()==dest->GetRoom()))
@@ -94,7 +93,7 @@ bool GameController::Simulate()
                {
                     if( !BuildingMap.IsValidMove(*PrevMove,currentMove))
                     {
-                            out->jsonMsg.append("\n]\n\n");
+                            out->jsonMsg.append("\n]\n\n}");
                             out->jsonMsg.insert(2,"\n\"IsGameValid\":\"False\",\n\n" );
                     }
                      else if((currentMove.GetRow()!=-1&&currentMove.GetColumn()!=-1))
@@ -120,9 +119,10 @@ bool GameController::Simulate()
                out->jsonMsg.insert(2,"\n\"IsGameValid\":\"False\",\n\n" );
                return false;
           }
+          movCount++;
       }
 
-      if(!( ((*iter).GetRow())==dest->GetFloor())&&!(((*iter).GetColumn()==dest->GetRoom())))
+      if(((!( ((*iter).GetRow())==dest->GetFloor())&&!(((*iter).GetColumn()==dest->GetRoom()))))||moves.empty())
       {
               out->jsonMsg.append("\n\n]\n\n}");
               out->jsonMsg.insert(2,"\n\"IsGameValid\":\"False\",\n\n" );

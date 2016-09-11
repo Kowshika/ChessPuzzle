@@ -69,13 +69,12 @@ GameConfig::ObstacleTypes Building::GetObstacleType(unsigned int floor,unsigned 
      if(currentPosition.GetRow() < GameConfig::Rows && nextPosition.GetRow() < GameConfig::Rows &&
         currentPosition.GetColumn() < GameConfig::Columns && nextPosition.GetColumn() < GameConfig::Columns)
      {
-         int rowDiff = abs(currentPosition.GetRow()-nextPosition.GetRow());
-         int colDiff = abs(currentPosition.GetColumn()-nextPosition.GetColumn());
+         int rowDiff = abs(((signed)currentPosition.GetRow())-((signed)nextPosition.GetRow()));
+         int colDiff = abs(((signed)currentPosition.GetColumn())-((signed)nextPosition.GetColumn()));
 
          if( (rowDiff==1&&colDiff==2) || (rowDiff==2&&colDiff==1))
               return true;
      }
      return false;
-
  }
 

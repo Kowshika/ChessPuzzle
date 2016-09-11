@@ -13,9 +13,5 @@ int main()
     out = Output::getInstance();
     cout<<out->jsonMsg;
 
-    ofstream myfile;
-    myfile.open ("C:\\Users\\Kowshika\\Downloads\\ChessPuzzle\\ChessPuzzle\\moves.json");
-    myfile<<out->jsonMsg;
-
     return 0;
 }
